@@ -1,11 +1,9 @@
-from datetime import datetime
-
 from pydantic import BaseModel, Field, ConfigDict
 
 
 class TaskBase(BaseModel):
-    title: str = Field(min_length=1, max_length=100, examples=["Завершить тестовое  задание"])
-    description: str | None = Field(None, min_length=20, examples=["Текст описывающий задачу"])
+    title: str = Field(min_length=1, max_length=100, examples=["Завершить тестовое задание"])
+    description: str | None = Field(None, examples=["Текст описывающий задачу"])
     is_completed: bool = Field(False, examples=[False])
 
 
@@ -15,18 +13,17 @@ class TaskCreate(TaskBase):
 
 class TaskUpdate(BaseModel):
     title: str | None = Field(None, min_length=1, max_length=100, examples=["Обновленное название задачи"])
-    description: str | None = Field(None, min_length=20, examples=["Обновленное описание"])
+    description: str | None = Field(None, examples=["Обновленное описание"])
     is_completed: bool | None = Field(None, examples=[True])
-
     model_config = ConfigDict(extra="forbid")
 
 
-class GetTask(TaskBase):
+class GetTask(BaseModel):
     id: int = Field(examples=[1])
-    created_at: datetime = Field(examples=["2024-01-15T10:30:00Z"])
-    updated_at: datetime = Field(examples=["2024-01-15T14:45:00Z"])
-
-    model_config = ConfigDict(from_attributes=True)
+    title: str = Field(min_length=1, max_length=100, examples=["Завершить тестовое задание"])
+    description: str | None = Field(None, examples=["Текст описывающий задачу"])
+    is_completed: bool = Field(False, examples=[False])
+    model_config = ConfigDict(from_attributes=True)  # ORM → dict
 
 
 class TaskResponse(BaseModel):

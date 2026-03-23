@@ -11,21 +11,26 @@ router = APIRouter()
 def get_tasks() -> TasksResponse:
     return TasksService.get_tasks()
 
+
 @router.get("/tasks/{task_id}")
 def get_task(task_id: int) -> TaskResponse:
     return TasksService.get_task(task_id)
+
 
 @router.post("/tasks")
 async def create_task(task: TaskCreate) -> TaskResponse:
     return TasksService.create_task(task)
 
+
 @router.put("/tasks/{task_id}")
 async def replace_task(task_id: int, task: TaskUpdate) -> TaskResponse:
     return TasksService.replace_task(task_id, task)
 
+
 @router.patch("/tasks/{task_id}")
 async def change_task(task_id: int, task: TaskUpdate) -> TaskResponse:
     return TasksService.change_task(task_id, task)
+
 
 @router.delete("/tasks/{task_id}")
 async def delete_task(task_id: int):
@@ -45,9 +50,10 @@ class TasksService:
         new_task = self.repo.create(task_dict)
         return self._to_response(new_task)
 
-    def get_tasks(self) -> TasksResponse:
-        tasks = self.repo.get_all()
-        return self._to_response(tasks)
+    @staticmethod
+    def get_tasks() -> TasksResponse:
+        tasks = TaskRepository.get_all()
+        return TasksService._to_list_response(tasks)
 
     def get_task(self, task_id: int) -> TaskResponse | None:
         task = self.repo.get_by_id(task_id)
