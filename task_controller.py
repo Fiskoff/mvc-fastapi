@@ -45,35 +45,38 @@ class TasksService:
     def _to_response(task: TaskModel) -> TaskResponse:
         return TaskResponse(task=GetTask.model_validate(task))
 
+    @staticmethod
+    def _to_list_response(tasks: list[TaskModel]) -> TasksResponse:
+        return TasksResponse(
+            tasks=[GetTask.model_validate(t) for t in tasks],
+            total=len(tasks),
+            skip=0,
+            limit=100,
+        )
+
     def create_task(self, task: TaskCreate) -> TaskResponse:
-        task_dict = task.model_dump()
-        new_task = self.repo.create(task_dict)
+        new_task = self.repo.create(task.model_dump())
         return self._to_response(new_task)
 
     @staticmethod
     def get_tasks() -> TasksResponse:
-        tasks = TaskRepository.get_all()
+        tasks = TaskRepository.get_all()  # или self.repo.get_all(), если не static
         return TasksService._to_list_response(tasks)
 
     def get_task(self, task_id: int) -> TaskResponse | None:
         task = self.repo.get_by_id(task_id)
-        if task is None:
-            return None
-        return self._to_response(task)
+        return self._to_response(task) if task else None
 
     def replace_task(self, task_id: int, task_update: TaskUpdate) -> TaskResponse:
-        task_dict = task_update.model_dump(exclude_unset=True)
-        updated = self.repo.replace(task_id, task_dict)
+        updated = self.repo.replace(task_id, task_update.model_dump(exclude_unset=True))
         return self._to_response(updated)
 
     def change_task(self, task_id: int, task_update: TaskUpdate) -> TaskResponse | None:
-        task_dict = task_update.model_dump(exclude_unset=True)
-        if not task_dict:
+        data = task_update.model_dump(exclude_unset=True)
+        if not data:
             return None
-        updated = self.repo.replace(task_id, task_dict)
-        if updated is None:
-            return None
-        return self._to_response(updated)
+        updated = self.repo.replace(task_id, data)
+        return self._to_response(updated) if updated else None
 
     def delete_task(self, task_id: int) -> bool:
         return self.repo.delete(task_id)
