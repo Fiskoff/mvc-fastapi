@@ -58,9 +58,8 @@ class TasksService:
         new_task = self.repo.create(task.model_dump())
         return self._to_response(new_task)
 
-    @staticmethod
-    def get_tasks() -> TasksResponse:
-        tasks = TaskRepository.get_all()  # или self.repo.get_all(), если не static
+    def get_tasks(self) -> TasksResponse:
+        tasks = self.repo.get_all()
         return TasksService._to_list_response(tasks)
 
     def get_task(self, task_id: int) -> TaskResponse | None:
