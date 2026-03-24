@@ -5,7 +5,7 @@ from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
 from model import TaskRepository
-from controllers import TasksService
+from controllers.task_service import TasksService
 
 
 def get_db_session(engine: Engine) -> Session:

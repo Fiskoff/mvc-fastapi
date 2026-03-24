@@ -35,3 +35,8 @@ class TasksResponse(BaseModel):
     total: int = Field(description="Общее количество задач")
     skip: int = Field(0, description="Количество пропущенных задач")
     limit: int = Field(100, description="Лимит задач на странице")
+
+
+class DeleteTask(BaseModel):
+    message: str = "success"
+    id: int = Field(examples=[1])

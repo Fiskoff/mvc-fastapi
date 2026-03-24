@@ -5,6 +5,7 @@ from view.task_schemas import (
     GetTask,
     TaskResponse,
     TasksResponse,
+    DeleteTask,
 )
 
 
@@ -15,5 +16,6 @@ __all__ = [
     'GetTask',
     'TaskResponse',
     'TasksResponse',
+    'DeleteTask',
 ]
 
