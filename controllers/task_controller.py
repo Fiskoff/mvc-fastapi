@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from controllers import TasksService
+from controllers.task_service import TasksService
 from view import TaskResponse, TasksResponse, TaskCreate, TaskUpdate
 
 
