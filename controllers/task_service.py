@@ -1,8 +1,7 @@
 from sqlalchemy import Engine
 
-from model.task_model import TaskModel
-from model.task_repository import TaskRepository
-from view.task_schemas import TaskResponse, GetTask, TasksResponse, TaskCreate, TaskUpdate
+from model import TaskModel, TaskRepository
+from view import TaskResponse, GetTask, TasksResponse, TaskCreate, TaskUpdate
 
 
 class TasksService:

@@ -4,8 +4,9 @@ from fastapi import Depends
 from sqlalchemy import Engine
 from sqlalchemy.orm import Session
 
-from model.task_repository import TaskRepository
-from controllers.task_service import TasksService
+from model import TaskRepository
+from controllers import TasksService
+
 
 def get_db_session(engine: Engine) -> Session:
     with Session(engine) as session:

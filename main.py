@@ -2,8 +2,8 @@ import uvicorn
 from fastapi import FastAPI
 from sqlalchemy import create_engine
 
-from model.task_model import BaseModel
-from controllers.task_controller import router
+from model import BaseModel
+from controllers import router
 
 
 engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)

@@ -1,7 +1,7 @@
 from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
 
-from model.task_model import TaskModel
+from model import TaskModel
 
 
 class TaskRepository:
