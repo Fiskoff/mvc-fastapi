@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 from sqlalchemy import Engine
 
-from task_model import TaskModel, TaskRepository
-from task_view import TaskResponse, TasksResponse, TaskCreate, TaskUpdate, GetTask
+from model.model import TaskModel, TaskRepository
+from view.task_view import TaskResponse, TasksResponse, TaskCreate, TaskUpdate, GetTask
 
 router = APIRouter()
 

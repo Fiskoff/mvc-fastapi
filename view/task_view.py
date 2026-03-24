@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field, ConfigDict
 
 
 class TaskBase(BaseModel):
-    title: str = Field(min_length=1, max_length=100, examples=["Завершить тестовое задание"])
+    title: str = Field(min_length=1, max_length=100, examples=["Тестовое задание"])
     description: str | None = Field(None, examples=["Текст описывающий задачу"])
     is_completed: bool = Field(False, examples=[False])
 

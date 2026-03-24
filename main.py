@@ -2,7 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from sqlalchemy import create_engine
 
-from task_model import BaseModel
+from model.model import BaseModel
 from task_controller import router
 
 
