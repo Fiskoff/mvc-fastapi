@@ -1,12 +1,10 @@
-from sqlalchemy import Engine
-
 from model import TaskModel, TaskRepository
 from view import TaskResponse, GetTask, TasksResponse, TaskCreate, TaskUpdate
 
 
 class TasksService:
-    def __init__(self, engine: Engine) -> None:
-        self.repo = TaskRepository(engine)
+    def __init__(self, repo: TaskRepository) -> None:
+        self.repo = repo
 
     @staticmethod
     def _to_response(task: TaskModel) -> TaskResponse:
@@ -16,9 +14,6 @@ class TasksService:
     def _to_list_response(tasks: list[TaskModel]) -> TasksResponse:
         return TasksResponse(
             tasks=[GetTask.model_validate(t) for t in tasks],
-            total=len(tasks),
-            skip=0,
-            limit=100,
         )
 
     def create_task(self, task: TaskCreate) -> TaskResponse:
@@ -40,8 +35,9 @@ class TasksService:
     def change_task(self, task_id: int, task_update: TaskUpdate) -> TaskResponse | None:
         data = task_update.model_dump(exclude_unset=True)
         if not data:
-            return None
-        updated = self.repo.replace(task_id, data)
+            task = self.repo.get_by_id(task_id)
+            return self._to_response(task) if task else None
+        updated = self.repo.update(task_id, data)
         return self._to_response(updated) if updated else None
 
     def delete_task(self, task_id: int) -> bool:

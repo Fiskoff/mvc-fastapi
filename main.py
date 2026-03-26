@@ -1,30 +1,18 @@
 import uvicorn
 from fastapi import FastAPI
-from sqlalchemy import create_engine
 
-from model import BaseModel
-from controllers import router
+from controllers.task_router import router
+from config import create_tables
 
 
-engine = create_engine("sqlite+pysqlite:///:memory:", echo=True)
+def main():
+    create_tables()
 
-app = FastAPI()
-app.include_router(router)
+    app = FastAPI()
+    app.include_router(router)
 
-def create_tables():
-    BaseModel.metadata.create_all(bind=engine)
-
-def drop_tables():
-    BaseModel.metadata.drop_all(bind=engine)
+    uvicorn.run(app, host="localhost", port=8000)
 
 
 if __name__ == '__main__':
-    create_tables()
-    uvicorn.run("main:app", host="localhost", port=8000)
-
-
-
-
-
-
-
+    main()

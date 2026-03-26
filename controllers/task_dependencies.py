@@ -1,21 +1,15 @@
 from typing import Annotated
 
 from fastapi import Depends
-from sqlalchemy import Engine
-from sqlalchemy.orm import Session
 
 from model import TaskRepository
 from controllers.task_service import TasksService
+from config import engine
 
 
-def get_db_session(engine: Engine) -> Session:
-    with Session(engine) as session:
-        yield session
+def get_repository() -> TaskRepository:
+    return TaskRepository(engine)
 
 
-def get_repository(session: Annotated[Session, Depends(get_db_session)]) -> TaskRepository:
-    return TaskRepository(session)
-
-
-def get_tasks_service(repo: Annotated[TaskRepository, Depends(get_repository)]) -> "TasksService":
+def get_tasks_service(repo: Annotated[TaskRepository, Depends(get_repository)]) -> TasksService:
     return TasksService(repo)
