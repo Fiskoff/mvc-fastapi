@@ -1,5 +1,5 @@
-from sqlalchemy import String, Text, Engine, select
-from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase, Session
+from sqlalchemy import String, Text
+from sqlalchemy.orm import Mapped, mapped_column, DeclarativeBase
 
 
 class BaseModel(DeclarativeBase):

@@ -1,9 +1,10 @@
-from model import TaskModel, TaskRepository
+from interfaces import InterfacesTaskRepository, InterfacesTasksService
+from model import TaskModel
 from view import TaskResponse, GetTask, TasksResponse, TaskCreate, TaskUpdate
 
 
-class TasksService:
-    def __init__(self, repo: TaskRepository) -> None:
+class TasksService(InterfacesTasksService):
+    def __init__(self, repo: InterfacesTaskRepository) -> None:
         self.repo = repo
 
     @staticmethod

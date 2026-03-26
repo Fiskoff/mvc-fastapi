@@ -2,10 +2,11 @@ from sqlalchemy import Engine, select
 from sqlalchemy.orm import Session
 from typing import Optional, List, Dict, Any
 
+from interfaces import InterfacesTaskRepository
 from model import TaskModel
 
 
-class TaskRepository:
+class TaskRepository(InterfacesTaskRepository):
     def __init__(self, engine: Engine) -> None:
         self.engine = engine
 
