@@ -20,6 +20,7 @@ def get_tasks() -> TasksResponse:
     result = service.get_tasks()
     return result
 
+
 @router.get("/tasks/{task_id}")
 def get_task(task_id: int, service: Annotated[InterfacesTasksService, Depends(get_tasks_service)]) -> TaskResponse:
     task = service.get_task(task_id)
