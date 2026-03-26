@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from config import engine
 from controllers.task_dependencies import get_tasks_service
-from controllers.task_service import TasksService
+from model.task_service import TasksService
 from interfaces import InterfacesTasksService
 from model.task_repository import TaskRepository
 from view import TaskResponse, TasksResponse, TaskCreate, TaskUpdate, DeleteTask

@@ -4,7 +4,7 @@ from fastapi import Depends
 
 from interfaces import InterfacesTaskRepository, InterfacesTasksService
 from model import TaskRepository
-from controllers.task_service import TasksService
+from model.task_service import TasksService
 from config import engine
 
 
